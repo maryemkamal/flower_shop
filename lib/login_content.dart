@@ -78,8 +78,7 @@ class LoginContent extends StatelessWidget {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             context
-                                .read<LoginBloc>()
-                                .add(LoginSubmitted());
+                                .read<LoginBloc>().add(LoginSubmitted());
                           }
                         },
                         child: const Text('Login'),
@@ -90,11 +89,9 @@ class LoginContent extends StatelessWidget {
                       const SizedBox(height: 10),
                       SocialLoginRow(
                         onGoogleTap: () {
-                          print('Google Login');
+                          context.read<LoginBloc>().add(LoginWithGooglePressed());
                         },
-                        onFacebookTap: () {
-                          print('Facebook Login');
-                        },
+                        
                       ),
                       const SizedBox(height: 10),
                       ForgetPasswordRow(

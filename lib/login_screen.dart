@@ -13,7 +13,6 @@ class LoginScreen extends StatelessWidget {
       body: SizedBox.expand(
         child: Stack(
           children: [
-            // Background image
             Positioned.fill(
               child: Image.asset(
                 'assets/flowerbackdrop.png',
@@ -21,7 +20,6 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
 
-            // Login container at bottom
             Align(
               alignment: Alignment.bottomCenter,
               child: BlocProvider(

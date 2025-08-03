@@ -10,4 +10,6 @@ class LoginPasswordChanged extends LoginEvent {
   LoginPasswordChanged(this.password);
 }
 
+class LoginWithGooglePressed extends LoginEvent {}
+
 class LoginSubmitted extends LoginEvent {}

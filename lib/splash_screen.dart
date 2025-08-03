@@ -9,21 +9,21 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
-      splash: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/flowerbackdrop.png'),
-            fit: BoxFit.cover,
+      splash: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              'assets/flowerbackdrop.png',
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: Center(
-          child: Text(
-            AppString.nameOf_shop,
-            style: Theme.of(context).textTheme.headlineLarge,
+          Center(
+            child: Text(
+              AppString.nameOf_shop,
+              style: Theme.of(context).textTheme.headlineLarge,
+            ),
           ),
-        ),
+        ],
       ),
       nextScreen: const LoginScreen(),
       splashTransition: SplashTransition.fadeTransition,
