@@ -41,48 +41,49 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAh_TKXDv_M3xb_oPBD1JCWwfccw8a9nZ8',
-    appId: '1:361944692662:web:07d920ba0f46a1362d7317',
-    messagingSenderId: '361944692662',
-    projectId: 'flowershop-c3cd7',
-    authDomain: 'flowershop-c3cd7.firebaseapp.com',
-    storageBucket: 'flowershop-c3cd7.firebasestorage.app',
-    measurementId: 'G-SGT3M1ZD9W',
+    apiKey: 'AIzaSyAmaIWSA9QzYFJxSKFmBGC_pOK-Ac-6Xfs',
+    appId: '1:1058488227735:web:cfbe06b8972d527a4ad6d2',
+    messagingSenderId: '1058488227735',
+    projectId: 'flowerly-app',
+    authDomain: 'flowerly-app.firebaseapp.com',
+    storageBucket: 'flowerly-app.firebasestorage.app',
+    measurementId: 'G-KS4J2RPGPB',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAI5rMUwfIEjDKV9c15ZAqkWRNWJa3egoM',
-    appId: '1:361944692662:android:6692a15f4c4b36c42d7317',
-    messagingSenderId: '361944692662',
-    projectId: 'flowershop-c3cd7',
-    storageBucket: 'flowershop-c3cd7.firebasestorage.app',
+    apiKey: 'AIzaSyDYlZvJQI1LBqTnzCT-6Zv9p6rk5e2vTIc',
+    appId: '1:1058488227735:android:9d9ab8cf55a5068e4ad6d2',
+    messagingSenderId: '1058488227735',
+    projectId: 'flowerly-app',
+    storageBucket: 'flowerly-app.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC2Q3ucAz2X0eS--0Iv2mbSgqmRPmU2frs',
-    appId: '1:361944692662:ios:fd50ed5d61d588562d7317',
-    messagingSenderId: '361944692662',
-    projectId: 'flowershop-c3cd7',
-    storageBucket: 'flowershop-c3cd7.firebasestorage.app',
-    iosBundleId: 'com.example.flowerShop',
+    apiKey: 'AIzaSyBKBpbl2LM-yvYRUsEWkt3O6-s_UKkT460',
+    appId: '1:1058488227735:ios:148d42c8286531324ad6d2',
+    messagingSenderId: '1058488227735',
+    projectId: 'flowerly-app',
+    storageBucket: 'flowerly-app.firebasestorage.app',
+    iosBundleId: 'com.example.flowerlyApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyC2Q3ucAz2X0eS--0Iv2mbSgqmRPmU2frs',
-    appId: '1:361944692662:ios:fd50ed5d61d588562d7317',
-    messagingSenderId: '361944692662',
-    projectId: 'flowershop-c3cd7',
-    storageBucket: 'flowershop-c3cd7.firebasestorage.app',
-    iosBundleId: 'com.example.flowerShop',
+    apiKey: 'AIzaSyBKBpbl2LM-yvYRUsEWkt3O6-s_UKkT460',
+    appId: '1:1058488227735:ios:148d42c8286531324ad6d2',
+    messagingSenderId: '1058488227735',
+    projectId: 'flowerly-app',
+    storageBucket: 'flowerly-app.firebasestorage.app',
+    iosBundleId: 'com.example.flowerlyApp',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyAh_TKXDv_M3xb_oPBD1JCWwfccw8a9nZ8',
-    appId: '1:361944692662:web:31f589331b1cb7282d7317',
-    messagingSenderId: '361944692662',
-    projectId: 'flowershop-c3cd7',
-    authDomain: 'flowershop-c3cd7.firebaseapp.com',
-    storageBucket: 'flowershop-c3cd7.firebasestorage.app',
-    measurementId: 'G-PNQCLJVXHV',
+    apiKey: 'AIzaSyAmaIWSA9QzYFJxSKFmBGC_pOK-Ac-6Xfs',
+    appId: '1:1058488227735:web:109f48e97f64e22d4ad6d2',
+    messagingSenderId: '1058488227735',
+    projectId: 'flowerly-app',
+    authDomain: 'flowerly-app.firebaseapp.com',
+    storageBucket: 'flowerly-app.firebasestorage.app',
+    measurementId: 'G-VM7XZY7CYD',
   );
+
 }
