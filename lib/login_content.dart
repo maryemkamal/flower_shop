@@ -8,6 +8,8 @@ import 'package:flower_shop/row_of_text.dart';
 import 'home.dart';
 import 'media_row.dart';
 import 'package:flower_shop/validators/form_valide.dart';
+import 'package:flower_shop/bottom_nav_screen.dart';
+
 class LoginContent extends StatelessWidget {
   const LoginContent({super.key});
 
@@ -19,7 +21,7 @@ class LoginContent extends StatelessWidget {
       listener: (context, state) {
         if (state.isSuccess) {
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const HomeScreen()),
+            MaterialPageRoute(builder: (context) =>  BottomNavScreen()),
           );
         }
       },

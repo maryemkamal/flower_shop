@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flowerly_app/resources/app_colors.dart' as AppTheme;
+import 'package:flower_shop/theme/app_colors.dart' as AppTheme;
 
 class ProductDetailsScreen extends StatelessWidget {
   final Map<String, String> product;

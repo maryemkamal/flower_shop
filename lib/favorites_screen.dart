@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 
 class FavoritesScreen extends StatelessWidget {
-  final List<Map<String, String>> allProducts;
+  final List<Map<String, dynamic>> allProducts;
   final Set<int> favoriteIndices;
   final Function(int) onFavoriteToggle;
   final Function(int) onRemoveFavorite;
-  final Function(Map<String, String>) onAddToCart;
+  final Function(Map<String, dynamic>) onAddToCart;
 
   const FavoritesScreen({
     super.key,
@@ -19,61 +18,97 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final favoriteProducts = favoriteIndices.map((i) => allProducts[i]).toList();
+    final favoriteProducts = favoriteIndices
+        .map((i) => allProducts[i])
+        .toList();
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Favorites'),
+        title: const Text("Favorites", style: TextStyle(color: Colors.white)),
         backgroundColor: const Color(0xFF23C16B),
       ),
       body: favoriteProducts.isEmpty
-          ? const Center(child: Text('No favorites yet.'))
-          : ListView.builder(
-        itemCount: favoriteProducts.length,
-        itemBuilder: (context, index) {
-          final product = favoriteProducts[index];
-          final productIndex = allProducts.indexOf(product);
-
-          return Card(
-            margin: const EdgeInsets.all(10),
-            child: ListTile(
-              leading: Image.asset(
-                product['image'] ?? '',
-                width: 60,
-                fit: BoxFit.cover,
+          ? const Center(child: Text("No favorites yet!"))
+          : GridView.builder(
+              padding: const EdgeInsets.all(10),
+              itemCount: favoriteProducts.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.75,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
               ),
-              title: Text(product['name'] ?? ''),
-              subtitle: Text(product['price'] ?? ''),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                textDirection: TextDirection.rtl,
-                children: [
-                  // 🗑️ أيقونة الحذف
-                  IconButton(
-                    icon: const Icon(Iconsax.trash),
-                    onPressed: () {
-                      onRemoveFavorite(productIndex);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("${product['name']} removed from favorites"),
+              itemBuilder: (context, index) {
+                final product = favoriteProducts[index];
+                final actualIndex = allProducts.indexOf(
+                  product,
+                ); // عشان نعرف مكانه الأصلي
+
+                return Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(15),
+                          ),
+                          child: Image.asset(
+                            product['image'],
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                          ),
                         ),
-                      );
-                    },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Text(
+                              product['name'],
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                            Text(product['price']),
+                            const SizedBox(height: 5),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  ),
+                                  onPressed: () =>
+                                      onRemoveFavorite(actualIndex),
+                                ),
+                                Expanded(
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFF23C16B),
+                                    ),
+                                    onPressed: () => onAddToCart(product),
+                                    child: const Text(
+                                      "Add to Cart",
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-
-
-                  IconButton(
-                    icon: const Icon(Iconsax.heart5, color: Colors.red),
-                    onPressed: () {
-                      onFavoriteToggle(productIndex);
-                    },
-                  ),
-                ],
-              ),
+                );
+              },
             ),
-          );
-        },
-      ),
     );
   }
 }

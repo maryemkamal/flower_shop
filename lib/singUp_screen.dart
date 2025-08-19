@@ -11,10 +11,15 @@ class SingupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Flower Shop", style: TextStyle(color: Colors.white)),
+        backgroundColor: const Color(0xFF23C16B),
+      ),
       body: SizedBox.expand(
         child: Stack(
           children: [
             // Background image
+
             Positioned.fill(
               child: Image.asset(
                 'assets/flowerbackdrop.png',

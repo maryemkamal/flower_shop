@@ -1,161 +1,159 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:flowerly_app/resources/app_colors.dart';
+import 'package:flower_shop/bloc/login_bloc/login_bloc.dart';
+import 'package:flower_shop/bloc/login_bloc/login_event.dart';
+import 'package:flower_shop/bloc/login_bloc/login_state.dart';
+import 'login_screen.dart';
+import 'main.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   final int cartCount;
   final int favoritesCount;
-  final bool isDarkMode;
   final String selectedLanguage;
-  final Function(bool) onDarkModeChanged;
   final Function(String) onLanguageChanged;
 
   const ProfileScreen({
     super.key,
     required this.cartCount,
     required this.favoritesCount,
-    required this.isDarkMode,
     required this.selectedLanguage,
-    required this.onDarkModeChanged,
     required this.onLanguageChanged,
   });
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  @override
   Widget build(BuildContext context) {
-    final isDarkMode = widget.isDarkMode;
-    final selectedLanguage = widget.selectedLanguage;
+    final user = FirebaseAuth.instance.currentUser;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
-    return Scaffold(
-      backgroundColor: isDarkMode ? Colors.black : AppColors.bgLightGreen,
-      appBar: AppBar(
-        backgroundColor: isDarkMode ? Colors.grey[900] : AppColors.primaryGreen,
-        title: Text(
-          selectedLanguage == 'English' ? 'Profile' : 'الملف الشخصي',
-          style: TextStyle(color: Colors.white),
+    return BlocProvider(
+      create: (_) => LoginBloc(),
+      child: BlocListener<LoginBloc, LoginState>(
+        listener: (context, state) {
+          if (state.isLoggedOut) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (_) => const LoginScreen()),
+                  (route) => false,
+            );
+          }
+        },
+        child: Scaffold(
+          backgroundColor: theme.scaffoldBackgroundColor,
+          appBar: AppBar(
+            backgroundColor: theme.appBarTheme.backgroundColor,
+            title: Text(
+              selectedLanguage == 'English' ? 'Profile' : 'الملف الشخصي',
+              style: theme.appBarTheme.titleTextStyle ??
+                  const TextStyle(color: Colors.white),
+            ),
+            centerTitle: true,
+          ),
+          body: ListView(
+            padding: const EdgeInsets.all(16),
+            children: [
+              CircleAvatar(
+                radius: 40,
+                backgroundColor: theme.colorScheme.primary,
+                child: const Icon(Iconsax.user, size: 40, color: Colors.white),
+              ),
+              const SizedBox(height: 10),
+              Center(
+                child: Text(
+                  selectedLanguage == 'English'
+                      ? 'Flower Lover'
+                      : 'عاشق الزهور',
+                  style: theme.textTheme.titleMedium
+                      ?.copyWith(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Center(
+                child: Text(
+                  user?.email ?? 'No email',
+                  style: theme.textTheme.bodyMedium
+                      ?.copyWith(color: theme.hintColor),
+                ),
+              ),
+              const Divider(height: 30),
+              ListTile(
+                leading: const Icon(Iconsax.shopping_bag),
+                title: Text(
+                  selectedLanguage == 'English' ? 'Cart Items' : 'عناصر السلة',
+                  style: theme.textTheme.bodyLarge,
+                ),
+                trailing: Text(
+                  '$cartCount',
+                  style: theme.textTheme.bodyLarge,
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Iconsax.heart),
+                title: Text(
+                  selectedLanguage == 'English' ? 'Favorites' : 'المفضلة',
+                  style: theme.textTheme.bodyLarge,
+                ),
+                trailing: Text(
+                  '$favoritesCount',
+                  style: theme.textTheme.bodyLarge,
+                ),
+              ),
+              const Divider(height: 30),
+              SwitchListTile(
+                title: Text(
+                  selectedLanguage == 'English' ? 'Dark Mode' : 'الوضع الليلي',
+                  style: theme.textTheme.bodyLarge,
+                ),
+                value: themeNotifier.value == ThemeMode.dark,
+                onChanged: (value) {
+                  themeNotifier.value =
+                  value ? ThemeMode.dark : ThemeMode.light;
+                },
+                secondary: const Icon(Icons.nightlight_round),
+              ),
+              ListTile(
+                leading: const Icon(Iconsax.global),
+                title: Text(
+                  selectedLanguage == 'English' ? 'Language' : 'اللغة',
+                  style: theme.textTheme.bodyLarge,
+                ),
+                trailing: DropdownButton<String>(
+                  dropdownColor: theme.cardColor,
+                  value: selectedLanguage,
+                  onChanged: (String? newLang) {
+                    if (newLang != null) {
+                      onLanguageChanged(newLang);
+                    }
+                  },
+                  items: ['English', 'Arabic'].map((lang) {
+                    return DropdownMenuItem(
+                      value: lang,
+                      child: Text(
+                        lang,
+                        style: theme.textTheme.bodyLarge,
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+              const Divider(height: 30),
+              ListTile(
+                leading: const Icon(Iconsax.logout),
+                title: Text(
+                  selectedLanguage == 'English'
+                      ? 'Logout'
+                      : 'تسجيل الخروج',
+                  style: theme.textTheme.bodyLarge,
+                ),
+                onTap: () {
+                  context.read<LoginBloc>().add(LogoutRequested());
+                },
+              ),
+            ],
+          ),
         ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.white),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          const CircleAvatar(
-            radius: 40,
-            backgroundColor: AppColors.primaryGreen,
-            child: Icon(Iconsax.user, size: 40, color: Colors.white),
-          ),
-          const SizedBox(height: 10),
-          Center(
-            child: Text(
-              selectedLanguage == 'English' ? 'Flower Lover' : 'عاشق الزهور',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: isDarkMode ? Colors.white : Colors.black,
-              ),
-            ),
-          ),
-          Center(
-            child: Text(
-              'user@example.com',
-              style: TextStyle(
-                color: isDarkMode ? Colors.grey[400] : Colors.black54,
-              ),
-            ),
-          ),
-          const Divider(height: 30),
-          ListTile(
-            leading: const Icon(Iconsax.shopping_bag),
-            title: Text(
-              selectedLanguage == 'English' ? 'Cart Items' : 'عناصر السلة',
-              style: TextStyle(
-                color: isDarkMode ? Colors.white : Colors.black,
-              ),
-            ),
-            trailing: Text(
-              '${widget.cartCount}',
-              style: TextStyle(
-                color: isDarkMode ? Colors.white : Colors.black,
-              ),
-            ),
-          ),
-          ListTile(
-            leading: const Icon(Iconsax.heart),
-            title: Text(
-              selectedLanguage == 'English' ? 'Favorites' : 'المفضلة',
-              style: TextStyle(
-                color: isDarkMode ? Colors.white : Colors.black,
-              ),
-            ),
-            trailing: Text(
-              '${widget.favoritesCount}',
-              style: TextStyle(
-                color: isDarkMode ? Colors.white : Colors.black,
-              ),
-            ),
-          ),
-          const Divider(height: 30),
-          SwitchListTile(
-            title: Text(
-              selectedLanguage == 'English' ? 'Dark Mode' : 'الوضع الليلي',
-              style: TextStyle(
-                color: isDarkMode ? Colors.white : Colors.black,
-              ),
-            ),
-            value: isDarkMode,
-            onChanged: widget.onDarkModeChanged,
-            secondary: const Icon(Iconsax.moon),
-          ),
-          ListTile(
-            leading: const Icon(Iconsax.global),
-            title: Text(
-              selectedLanguage == 'English' ? 'Language' : 'اللغة',
-              style: TextStyle(
-                color: isDarkMode ? Colors.white : Colors.black,
-              ),
-            ),
-            trailing: DropdownButton<String>(
-              value: selectedLanguage,
-              onChanged: (String? newLang) {
-                if (newLang != null) {
-                  widget.onLanguageChanged(newLang);
-                }
-              },
-              items: ['English', 'Arabic'].map((lang) {
-                return DropdownMenuItem(
-                  value: lang,
-                  child: Text(
-                    lang,
-                    style: TextStyle(
-                      color: isDarkMode ? Colors.white : Colors.black,
-                    ),
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
-          const Divider(height: 30),
-          ListTile(
-            leading: const Icon(Iconsax.logout),
-            title: Text(
-              selectedLanguage == 'English' ? 'Logout' : 'تسجيل الخروج',
-              style: TextStyle(
-                color: isDarkMode ? Colors.white : Colors.black,
-              ),
-            ),
-            onTap: () {
-              // TODO: Implement logout
-              // FirebaseAuth.instance.signOut();
-              // Navigator.pushReplacementNamed(context, '/login');
-            },
-          ),
-        ],
       ),
     );
   }
-}//the end
+}

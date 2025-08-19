@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-
-class AppColors {
-  static const Color primary = Color(0xFF23C16B);
-  static const Color background = Color(0xFFDAEFDE);
-}
+import 'package:flower_shop/theme/app_colors.dart';
 
 class CartScreen extends StatefulWidget {
-  final List<Map<String, String>> cart;
+  final List<Map<String, dynamic>> cart;
 
   const CartScreen({super.key, required this.cart});
 

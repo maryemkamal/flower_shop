@@ -4,6 +4,7 @@ import 'package:flower_shop/theme/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
 
+ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.light);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,15 +17,20 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flower_Shop',
-      theme: AppTheme.lightTheme,
-
-      home: const SplashScreen(),
-      debugShowCheckedModeBanner: false,
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: themeNotifier,
+      builder: (context, currentTheme, child) {
+        return MaterialApp(
+          title: 'Flower_Shop',
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: currentTheme,
+          home:  SplashScreen(),
+          debugShowCheckedModeBanner: false,
+        );
+      },
     );
   }
 }

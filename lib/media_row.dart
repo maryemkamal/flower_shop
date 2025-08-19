@@ -25,14 +25,14 @@ class SocialLoginRow extends StatelessWidget {
             size: 30,
           ),
         ),
-        GestureDetector(
-          onTap: onFacebookTap,
-          child: const FaIcon(
-            FontAwesomeIcons.facebookF,
-            color: Colors.blue,
-            size: 30,
-          ),
-        ),
+        // GestureDetector(
+        //   onTap: onFacebookTap,
+        //   child: const FaIcon(
+        //     FontAwesomeIcons.facebookF,
+        //     color: Colors.blue,
+        //     size: 30,
+        //   ),
+        // ),
       ],
     );
   }

@@ -61,5 +61,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         ));
       }
     });
+    on<LogoutRequested>((event, emit) async {
+      await FirebaseAuth.instance.signOut();
+      emit(state.copyWith(isLoggedOut: true));
+    });
+
+
   }
 }

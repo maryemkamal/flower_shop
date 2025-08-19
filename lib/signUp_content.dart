@@ -4,6 +4,7 @@ import 'package:flower_shop/bloc/signup_bloc/bloc/signup_bloc.dart';
 import 'package:flower_shop/home.dart';
 import 'package:flower_shop/theme/app_string.dart';
 import 'package:flower_shop/validators/form_valide.dart';
+import 'package:flower_shop/bottom_nav_screen.dart';
 import 'media_row.dart';
 import 'row_of_text.dart';
 
@@ -34,7 +35,7 @@ class _SignUpConenteState extends State<SignUpConente> {
       listener: (context, state) {
         if (state.isSuccess) {
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const HomeScreen()),
+            MaterialPageRoute(builder: (context) =>  BottomNavScreen()),
           );
         } else if (state.errorMessage != null) {
           ScaffoldMessenger.of(context).showSnackBar(
